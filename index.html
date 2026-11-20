@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web PDF — Free, Private PDF Editor in Your Browser | Lit By Bit</title>
+<meta name="description" content="Merge, reorder, delete and rotate PDF pages in your browser. Your files never leave your laptop. Free, no account, no upload. By Lit By Bit.">
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--muted:#94a3b8;--accent:#f59e0b;--accent2:#22c55e;--line:#334155}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{color:#fbbf24}.wrap{max-width:1080px;margin:0 auto;padding:24px 18px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px}.logo span{color:var(--accent)}
+.hero{text-align:center;padding:36px 0 18px}.hero h1{font-size:clamp(32px,6vw,56px);line-height:1.05;margin:10px 0}
+.hero p{color:var(--muted);font-size:18px;max-width:720px;margin:0 auto}
+.badge{display:inline-block;background:#78350f;color:#fde68a;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700}
+.app{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:28px}
+.drop{border:2px dashed #64748b;border-radius:12px;padding:36px 18px;text-align:center;cursor:pointer}
+.drop.over{border-color:var(--accent);background:#111827}
+.drop input{display:none}
+.btn{display:inline-block;background:var(--accent);color:#111827;border:0;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer;font-size:15px}
+.btn.secondary{background:#334155;color:#fff}.btn.green{background:var(--accent2);color:#052e16}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.small{padding:7px 10px;font-size:13px;border-radius:8px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0}
+.status{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:10px}
+.card{background:#0f172a;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.card canvas{width:100%;height:auto;border-radius:6px;background:#fff}
+.card .label{font-size:12px;color:var(--muted);margin:8px 0;word-break:break-all}
+.card .row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:36px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.feat h3{margin:0 0 8px}.feat p{color:var(--muted);margin:0;font-size:15px}
+section h2{font-size:28px;margin:44px 0 10px}section p{color:var(--muted)}
+footer{color:var(--muted);text-align:center;margin-top:48px;font-size:14px}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+summary{cursor:pointer;font-weight:700}
+#msg{margin-top:12px;font-size:14px;color:#fde68a;min-height:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">Lit By Bit <span>• Web PDF</span></div><a href="https://lit-by-bit.vercel.app">← Back to Lit By Bit</a></header>
+
+<div class="hero">
+<span class="badge">FREE • NO ACCOUNT • NO UPLOAD</span>
+<h1>Your files never<br>leave your laptop.</h1>
+<p>Merge, reorder, delete and rotate PDF pages — right in your browser. A complete free PDF editor, built by Lit By Bit.</p>
+</div>
+
+<div class="app" id="app">
+  <div class="drop" id="drop">
+    <strong style="font-size:20px">Drop PDF files here</strong>
+    <p style="color:var(--muted)">or click to choose files — you can add more than one PDF</p>
+    <input type="file" id="fileInput" accept="application/pdf" multiple>
+    <button class="btn" type="button" onclick="document.getElementById('fileInput').click()">Choose PDF files</button>
+  </div>
+  <div class="toolbar">
+    <button class="btn secondary small" id="addMore" type="button">+ Add more PDFs</button>
+    <button class="btn secondary small" id="clearAll" type="button">Clear all</button>
+    <span class="status" id="count">No pages yet — add a PDF to start.</span>
+    <span style="flex:1"></span>
+    <button class="btn green" id="downloadBtn" type="button" disabled>Download merged PDF</button>
+  </div>
+  <div id="msg"></div>
+  <div class="grid" id="grid"></div>
+  <p class="status" style="margin-top:16px">Privacy: files are processed locally in your browser with pdf.js / pdf-lib. Nothing is uploaded to a server.</p>
+</div>
+
+<section>
+<h2>What you can do</h2>
+<div class="features">
+<div class="feat"><h3>Merge PDFs</h3><p>Combine two or more PDFs into one file, in the order you choose.</p></div>
+<div class="feat"><h3>Reorder pages</h3><p>Move any page left or right until the order is exactly right.</p></div>
+<div class="feat"><h3>Delete &amp; rotate</h3><p>Remove unwanted pages and rotate sideways pages 90° at a time.</p></div>
+<div class="feat"><h3>Private by design</h3><p>No account, no upload, no tracking of your documents.</p></div>
+</div>
+</section>
+
+<section>
+<h2>How it works</h2>
+<p>1. Drop your PDFs in. &nbsp;2. Reorder, delete or rotate pages. &nbsp;3. Click “Download merged PDF”. That’s it — your original files are never sent anywhere.</p>
+<h2>FAQ</h2>
+<details><summary>Is my file uploaded?</summary><p>No — ever. Processing happens in your browser.</p></details>
+<details><summary>Is it really free?</summary><p>Yes. Merge, reorder, delete and rotate are free, with no account.</p></details>
+<details><summary>What’s coming next?</summary><p>Split PDF, extract pages, compress PDF, and PDF to image — tell us what you need most.</p></details>
+</section>
+
+<footer>Built by <a href="https://lit-by-bit.vercel.app">Lit By Bit</a>, Bhakkar, Pakistan — We build what people were not able to see before.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const files = []; // {name, bytes}
+let pages = [];   // {fileIdx, pageIdx, rotation}
+const drop = document.getElementById('drop');
+const input = document.getElementById('fileInput');
+const grid = document.getElementById('grid');
+const countEl = document.getElementById('count');
+const msgEl = document.getElementById('msg');
+const dlBtn = document.getElementById('downloadBtn');
+
+function say(t){ msgEl.textContent = t || ''; }
+drop.addEventListener('click', e => { if(e.target.tagName !== 'BUTTON') input.click(); });
+['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+input.addEventListener('change', () => addFiles(input.files));
+document.getElementById('addMore').addEventListener('click', () => input.click());
+document.getElementById('clearAll').addEventListener('click', () => { files.length = 0; pages = []; render(); say('Cleared.'); });
+dlBtn.addEventListener('click', downloadMerged);
+
+async function addFiles(list){
+  for(const f of list){
+    if(f.type !== 'application/pdf' && !f.name.toLowerCase().endsWith('.pdf')){ say(f.name + ' is not a PDF — skipped.'); continue; }
+    try{
+      const bytes = new Uint8Array(await f.arrayBuffer());
+      const pdf = await pdfjsLib.getDocument({data: bytes.slice()}).promise;
+      const idx = files.length;
+      files.push({name: f.name, bytes});
+      for(let i = 0; i < pdf.numPages; i++) pages.push({fileIdx: idx, pageIdx: i, rotation: 0});
+      say('Added ' + f.name + ' — ' + pdf.numPages + ' page(s).');
+    }catch(err){ say('Could not read ' + f.name + ': ' + err.message); }
+  }
+  input.value = '';
+  render();
+}
+
+async function render(){
+  countEl.textContent = pages.length ? pages.length + ' page(s) from ' + files.length + ' file(s). Use ← → to reorder, ↻ to rotate, ✕ to delete.' : 'No pages yet — add a PDF to start.';
+  dlBtn.disabled = !pages.length;
+  grid.innerHTML = '';
+  // Cache pdf.js docs per file for this render
+  const docs = {};
+  for(let i = 0; i < pages.length; i++){
+    const p = pages[i];
+    const card = document.createElement('div'); card.className = 'card';
+    const canvas = document.createElement('canvas');
+    const label = document.createElement('div'); label.className = 'label';
+    label.textContent = (i+1) + '. ' + files[p.fileIdx].name + ' — p' + (p.pageIdx+1) + (p.rotation ? ' • ' + p.rotation + '°' : '');
+    const row = document.createElement('div'); row.className = 'row';
+    const mk = (t, fn) => { const b = document.createElement('button'); b.className='btn secondary small'; b.type='button'; b.textContent=t; b.onclick=fn; return b; };
+    row.append(mk('←', () => move(i,-1)), mk('→', () => move(i,1)), mk('↻', () => { p.rotation = (p.rotation+90)%360; render(); }), mk('✕', () => { pages.splice(i,1); render(); }));
+    card.append(canvas, label, row); grid.appendChild(card);
+    try{
+      if(!docs[p.fileIdx]) docs[p.fileIdx] = await pdfjsLib.getDocument({data: files[p.fileIdx].bytes.slice()}).promise;
+      const page = await docs[p.fileIdx].getPage(p.pageIdx+1);
+      const vp = page.getViewport({scale: 0.6, rotation: p.rotation});
+      canvas.width = vp.width; canvas.height = vp.height;
+      await page.render({canvasContext: canvas.getContext('2d'), viewport: vp}).promise;
+    }catch(err){ label.textContent += ' (preview failed)'; }
+  }
+}
+function move(i, d){ const j = i+d; if(j < 0 || j >= pages.length) return; const t = pages[i]; pages[i] = pages[j]; pages[j] = t; render(); }
+
+async function downloadMerged(){
+  if(!pages.length) return;
+  say('Building your PDF…'); dlBtn.disabled = true;
+  try{
+    const out = await PDFLib.PDFDocument.create();
+    const srcDocs = {};
+    for(const p of pages){
+      if(!srcDocs[p.fileIdx]) srcDocs[p.fileIdx] = await PDFLib.PDFDocument.load(files[p.fileIdx].bytes);
+      const src = srcDocs[p.fileIdx];
+      const [copied] = await out.copyPages(src, [p.pageIdx]);
+      const orig = src.getPage(p.pageIdx).getRotation().angle;
+      copied.setRotation(PDFLib.degrees((orig + p.rotation) % 360));
+      out.addPage(copied);
+    }
+    const bytes = await out.save();
+    const blob = new Blob([bytes], {type: 'application/pdf'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'web-pdf-merged.pdf'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    say('Done — your merged PDF downloaded. ' + pages.length + ' page(s).');
+  }catch(err){ say('Download failed: ' + err.message); }
+  dlBtn.disabled = !pages.length;
+}
+</script>
+</body>
+</html>
